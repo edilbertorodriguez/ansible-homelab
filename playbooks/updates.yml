@@ -1,0 +1,22 @@
+---
+###############################################################################
+# System Updates
+#
+# Purpose:
+#   Apply operating system updates and maintenance tasks across the homelab.
+#
+# Future roles:
+#   - updates
+#   - reboot
+###############################################################################
+
+- name: Update Linux Systems
+  hosts:
+    - hypervisors
+    - raspberry_pi
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Confirm update target connectivity
+      ansible.builtin.ping:

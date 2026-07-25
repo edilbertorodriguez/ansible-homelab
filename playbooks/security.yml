@@ -1,0 +1,33 @@
+---
+###############################################################################
+# Security Infrastructure
+#
+# Purpose:
+#   Configure and maintain the homelab security stack.
+#
+# Future roles:
+#   - wazuh_agent
+#   - fail2ban
+#   - ssh
+#   - ufw
+###############################################################################
+
+- name: Configure Security Monitoring Systems
+  hosts: security_monitoring
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Confirm security monitoring host connectivity
+      ansible.builtin.ping:
+
+- name: Harden Linux Systems
+  hosts:
+    - hypervisors
+    - raspberry_pi
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Confirm managed host connectivity
+      ansible.builtin.ping:

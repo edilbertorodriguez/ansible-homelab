@@ -1,0 +1,23 @@
+---
+###############################################################################
+# Bootstrap Infrastructure
+#
+# Purpose:
+#   Prepare every managed Linux system with the common baseline configuration.
+#
+# Future roles:
+#   - common
+#   - users
+#   - ssh
+#   - ufw
+###############################################################################
+
+- name: Bootstrap Linux Infrastructure
+  hosts:
+    - hypervisors
+    - raspberry_pi
+  become: true
+  gather_facts: true
+
+  roles:
+    - common

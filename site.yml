@@ -1,0 +1,23 @@
+---
+###############################################################################
+# Ansible Homelab
+# Master Orchestration Playbook
+#
+# This playbook serves as the primary entry point for the entire homelab.
+# Individual playbooks are imported based on infrastructure domain.
+###############################################################################
+
+- name: Bootstrap Infrastructure
+  import_playbook: playbooks/bootstrap.yml
+
+- name: Configure Infrastructure Services
+  import_playbook: playbooks/infrastructure.yml
+
+- name: Configure Security Stack
+  import_playbook: playbooks/security.yml
+
+- name: Configure Monitoring
+  import_playbook: playbooks/monitoring.yml
+
+- name: Perform System Updates
+  import_playbook: playbooks/updates.yml

@@ -1,0 +1,41 @@
+---
+###############################################################################
+# Infrastructure Services
+#
+# Purpose:
+#   Configure service-specific infrastructure across the homelab.
+#
+# Future roles:
+#   - pihole
+#   - homeassistant
+#   - docker
+#   - tailscale
+#   - proxmox
+###############################################################################
+
+- name: Configure Pi-hole Servers
+  hosts: pihole_servers
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Confirm Pi-hole host connectivity
+      ansible.builtin.ping:
+
+- name: Configure Home Assistant Servers
+  hosts: homeassistant_servers
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Confirm Home Assistant host connectivity
+      ansible.builtin.ping:
+
+- name: Configure Hypervisors
+  hosts: hypervisors
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Confirm hypervisor connectivity
+      ansible.builtin.ping:

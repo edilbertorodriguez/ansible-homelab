@@ -1,0 +1,23 @@
+---
+###############################################################################
+# Monitoring Infrastructure
+#
+# Purpose:
+#   Configure monitoring, metrics, and observability services.
+#
+# Future roles:
+#   - node_exporter
+#   - prometheus
+#   - grafana
+###############################################################################
+
+- name: Configure Monitoring Infrastructure
+  hosts:
+    - hypervisors
+    - raspberry_pi
+  become: true
+  gather_facts: true
+
+  tasks:
+    - name: Confirm monitoring host connectivity
+      ansible.builtin.ping:
