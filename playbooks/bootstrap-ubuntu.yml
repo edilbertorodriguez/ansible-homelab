@@ -1,0 +1,8 @@
+---
+- name: Bootstrap Ubuntu lab servers
+  hosts: ubuntu_servers
+  become: true
+  gather_facts: true
+
+  roles:
+    - common

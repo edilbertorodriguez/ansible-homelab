@@ -1,0 +1,10 @@
+---
+common_system_timezone: America/Monterrey
+
+common_packages:
+  - curl
+  - git
+  - htop
+  - nano
+  - unzip
+  - vim

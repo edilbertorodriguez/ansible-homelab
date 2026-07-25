@@ -1,0 +1,6 @@
+---
+# Default timezone for managed Ubuntu systems
+common_system_timezone: UTC
+
+# Common packages installed on every Ubuntu server
+common_packages: []
