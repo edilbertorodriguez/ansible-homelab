@@ -1,2 +1,5 @@
 ---
 common_manage_hostname: true
+
+common_manage_timezone: true
+common_system_timezone: UTC

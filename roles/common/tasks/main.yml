@@ -12,5 +12,8 @@
 - name: Run hostname management tasks
   ansible.builtin.import_tasks: hostname.yml
 
+- name: Run timezone management tasks
+  ansible.builtin.import_tasks: timezone.yml
+
 - name: Run package management tasks
   ansible.builtin.import_tasks: packages.yml

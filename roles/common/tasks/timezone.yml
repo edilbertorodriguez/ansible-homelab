@@ -1,0 +1,14 @@
+---
+###############################################################################
+# Timezone Management
+#
+# Configure the system timezone.
+###############################################################################
+
+- name: Configure system timezone
+  community.general.timezone:
+    name: "{{ common_system_timezone }}"
+  when: common_manage_timezone | bool
+  tags:
+    - common
+    - timezone
