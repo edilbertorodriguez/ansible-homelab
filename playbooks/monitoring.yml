@@ -12,9 +12,7 @@
 ###############################################################################
 
 - name: Configure Monitoring Infrastructure
-  hosts:
-    - hypervisors
-    - raspberry_pi
+  hosts: linux
   become: true
   gather_facts: true
 

@@ -9,5 +9,8 @@
 - name: Run validation tasks
   ansible.builtin.import_tasks: validation.yml
 
+- name: Run hostname management tasks
+  ansible.builtin.import_tasks: hostname.yml
+
 - name: Run package management tasks
   ansible.builtin.import_tasks: packages.yml

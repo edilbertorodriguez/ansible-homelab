@@ -22,9 +22,7 @@
       ansible.builtin.ping:
 
 - name: Harden Linux Systems
-  hosts:
-    - hypervisors
-    - raspberry_pi
+  hosts: linux
   become: true
   gather_facts: true
 
