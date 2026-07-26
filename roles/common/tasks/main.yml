@@ -1,25 +1,13 @@
 ---
-- name: Update APT package cache
-  ansible.builtin.apt:
-    update_cache: true
-    cache_valid_time: 3600
+###############################################################################
+# Common Role
+#
+# Master task file for baseline Linux configuration.
+# Individual functional areas are imported below.
+###############################################################################
 
-- name: Upgrade installed packages
-  ansible.builtin.apt:
-    upgrade: dist
-    update_cache: true
+- name: Run validation tasks
+  ansible.builtin.import_tasks: validation.yml
 
-- name: Install common administration packages
-  ansible.builtin.apt:
-    name: "{{ common_packages }}"
-    state: present
-
-- name: Set the system timezone
-  community.general.timezone:
-    name: "{{ common_system_timezone }}"
-
-- name: Ensure SSH service is enabled and running
-  ansible.builtin.service:
-    name: ssh
-    state: started
-    enabled: true
+- name: Run package management tasks
+  ansible.builtin.import_tasks: packages.yml

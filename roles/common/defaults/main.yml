@@ -1,6 +1,25 @@
 ---
-# Default timezone for managed Ubuntu systems
-common_system_timezone: UTC
+###############################################################################
+# Common Role Defaults
+#
+# Default variables applied to all managed Linux hosts.
+###############################################################################
 
-# Common packages installed on every Ubuntu server
-common_packages: []
+common_packages:
+  - curl
+  - git
+  - vim
+  - htop
+  - btop
+  - unzip
+  - zip
+  - wget
+  - rsync
+  - tree
+  - net-tools
+  - dnsutils
+  - ca-certificates
+  - bash-completion
+
+common_update_cache: true
+common_upgrade_packages: false

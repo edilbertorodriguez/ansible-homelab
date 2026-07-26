@@ -1,0 +1,15 @@
+---
+###############################################################################
+# Validation Tasks
+#
+# Verify the target system is supported before applying configuration.
+###############################################################################
+
+- name: Validate supported operating system family
+  ansible.builtin.assert:
+    that:
+      - ansible_os_family == "Debian"
+    fail_msg: >-
+      The common role currently supports only Debian-based operating systems.
+      Detected OS family: {{ ansible_os_family }}
+    success_msg: Supported Debian-based operating system detected.
