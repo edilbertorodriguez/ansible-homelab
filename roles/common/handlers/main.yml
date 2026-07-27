@@ -1,6 +1,9 @@
 ---
 ###############################################################################
 # Common Role Handlers
-#
-# Service and system handlers notified by common role tasks.
 ###############################################################################
+
+- name: Restart SSH service
+  ansible.builtin.service:
+    name: ssh
+    state: restarted

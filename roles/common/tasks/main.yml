@@ -15,5 +15,8 @@
 - name: Run timezone management tasks
   ansible.builtin.import_tasks: timezone.yml
 
+- name: Run SSH daemon configuration tasks
+  ansible.builtin.import_tasks: sshd.yml
+
 - name: Run package management tasks
   ansible.builtin.import_tasks: packages.yml
