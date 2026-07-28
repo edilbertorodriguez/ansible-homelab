@@ -1,0 +1,23 @@
+---
+###############################################################################
+# Validate users role variables
+###############################################################################
+
+- name: Validate users_accounts variable type
+  ansible.builtin.assert:
+    that:
+      - users_accounts is iterable
+      - users_accounts is not string
+    fail_msg: >
+      users_accounts must be defined as a YAML list.
+
+- name: Validate each managed user definition
+  ansible.builtin.assert:
+    that:
+      - item.username is defined
+      - item.username | length > 0
+    fail_msg: >
+      Every entry in users_accounts must define a non-empty username.
+  loop: "{{ users_accounts }}"
+  loop_control:
+    label: "{{ item.username | default('undefined') }}"

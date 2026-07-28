@@ -1,22 +1,26 @@
 ---
 ###############################################################################
-# Timezone Management
-#
-# Configure the system timezone using systemd timedatectl.
+# Manage system timezone
 ###############################################################################
 
 - name: Get current timezone
-  ansible.builtin.command: timedatectl show --property=Timezone --value
-  register: current_timezone
+  ansible.builtin.command:
+    argv:
+      - timedatectl
+      - show
+      - --property=Timezone
+      - --value
+  register: common_current_timezone
   changed_when: false
   when: common_manage_timezone | bool
 
 - name: Configure system timezone
   ansible.builtin.command:
-    cmd: "timedatectl set-timezone {{ common_system_timezone }}"
+    argv:
+      - timedatectl
+      - set-timezone
+      - "{{ common_system_timezone }}"
+  changed_when: true
   when:
     - common_manage_timezone | bool
-    - current_timezone.stdout != common_system_timezone
-  tags:
-    - common
-    - timezone
+    - common_current_timezone.stdout != common_system_timezone

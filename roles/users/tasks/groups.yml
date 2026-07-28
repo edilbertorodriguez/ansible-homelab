@@ -1,0 +1,25 @@
+---
+###############################################################################
+# Manage supplementary Linux groups
+###############################################################################
+
+- name: Ensure supplementary groups exist
+  ansible.builtin.group:
+    name: "{{ item }}"
+    state: present
+  loop: >-
+    {{
+      (
+        users_default_groups
+        +
+        (
+          users_accounts
+          | map(attribute='groups', default=[])
+          | flatten
+        )
+      )
+      | unique
+      | sort
+    }}
+  loop_control:
+    label: "{{ item }}"

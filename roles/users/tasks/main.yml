@@ -1,0 +1,27 @@
+---
+###############################################################################
+# Users Role
+###############################################################################
+
+- name: Validate users role configuration
+  ansible.builtin.import_tasks: validation.yml
+  when:
+    - users_manage_accounts | bool
+      or users_manage_authorized_keys | bool
+      or users_manage_sudo | bool
+
+- name: Manage supplementary groups
+  ansible.builtin.import_tasks: groups.yml
+  when: users_manage_accounts | bool
+
+- name: Manage local user accounts
+  ansible.builtin.import_tasks: users.yml
+  when: users_manage_accounts | bool
+
+- name: Manage SSH authorized keys
+  ansible.builtin.import_tasks: authorized_keys.yml
+  when: users_manage_authorized_keys | bool
+
+- name: Manage sudo policy
+  ansible.builtin.import_tasks: sudo.yml
+  when: users_manage_sudo | bool

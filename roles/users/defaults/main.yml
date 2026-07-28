@@ -1,0 +1,44 @@
+---
+###############################################################################
+# Users Role Defaults
+###############################################################################
+
+# Manage local user accounts and supplementary groups.
+users_manage_accounts: false
+
+# Manage SSH authorized-key files for declared users.
+users_manage_authorized_keys: true
+
+# Manage sudo policy for declared users.
+users_manage_sudo: true
+
+# Directory containing managed SSH public-key files.
+users_ssh_keys_directory: ssh_keys
+
+# Default shell assigned to managed users.
+users_default_shell: /bin/bash
+
+# Default supplementary groups applied to managed users.
+users_default_groups: []
+
+# Default state for managed users.
+users_default_state: present
+
+# List of user accounts known to this role.
+#
+# SSH public keys are stored in:
+# roles/users/files/ssh_keys/<username>.pub
+#
+# A single .pub file may contain multiple public keys, one per line.
+#
+# Example:
+#
+# users_accounts:
+#   - username: alice
+#     comment: Infrastructure Engineer
+#     shell: /bin/bash
+#     groups:
+#       - sudo
+#     sudo: true
+#
+users_accounts: []

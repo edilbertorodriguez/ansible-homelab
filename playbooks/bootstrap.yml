@@ -8,8 +8,8 @@
 # Future roles:
 #   - common
 #   - users
-#   - ssh
-#   - ufw
+#   - security
+#   - monitoring
 ###############################################################################
 
 - name: Bootstrap Linux Infrastructure
@@ -18,4 +18,6 @@
   gather_facts: true
 
   roles:
-    - common
+    - role: common
+
+    - role: users

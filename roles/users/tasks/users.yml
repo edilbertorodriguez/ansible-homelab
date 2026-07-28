@@ -1,0 +1,17 @@
+---
+###############################################################################
+# Manage Linux user accounts
+###############################################################################
+
+- name: Ensure Linux user accounts exist
+  ansible.builtin.user:
+    name: "{{ item.username }}"
+    comment: "{{ item.comment | default(omit) }}"
+    shell: "{{ item.shell | default(users_default_shell) }}"
+    groups: "{{ (users_default_groups + (item.groups | default([]))) | unique }}"
+    append: true
+    state: "{{ item.state | default(users_default_state) }}"
+    create_home: true
+  loop: "{{ users_accounts }}"
+  loop_control:
+    label: "{{ item.username }}"

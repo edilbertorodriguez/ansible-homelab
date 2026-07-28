@@ -1,0 +1,38 @@
+---
+###############################################################################
+# Manage SSH authorized keys
+###############################################################################
+
+- name: Check for managed SSH public keys
+  ansible.builtin.stat:
+    path: "{{ role_path }}/files/{{ users_ssh_keys_directory }}/{{ item.username }}.pub"
+  delegate_to: localhost
+  become: false
+  register: users_ssh_key_files
+  loop: "{{ users_accounts }}"
+  loop_control:
+    label: "{{ item.username }}"
+
+- name: Create .ssh directory
+  ansible.builtin.file:
+    path: "/home/{{ item.item.username }}/.ssh"
+    state: directory
+    owner: "{{ item.item.username }}"
+    group: "{{ item.item.username }}"
+    mode: "0700"
+  loop: "{{ users_ssh_key_files.results }}"
+  loop_control:
+    label: "{{ item.item.username }}"
+  when: item.stat.exists
+
+- name: Install authorized_keys
+  ansible.builtin.copy:
+    src: "{{ users_ssh_keys_directory }}/{{ item.item.username }}.pub"
+    dest: "/home/{{ item.item.username }}/.ssh/authorized_keys"
+    owner: "{{ item.item.username }}"
+    group: "{{ item.item.username }}"
+    mode: "0600"
+  loop: "{{ users_ssh_key_files.results }}"
+  loop_control:
+    label: "{{ item.item.username }}"
+  when: item.stat.exists
