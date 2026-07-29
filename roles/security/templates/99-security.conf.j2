@@ -1,0 +1,6 @@
+# Managed by Ansible.
+# Local changes will be overwritten.
+
+{% for parameter, value in security_sysctl_parameters.items() %}
+{{ parameter }} = {{ value }}
+{% endfor %}

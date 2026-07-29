@@ -81,3 +81,21 @@ security_chrony_servers:
   - time.google.com iburst
 
 security_chrony_allow_networks: []
+
+###############################################################################
+# Sysctl hardening
+###############################################################################
+
+security_sysctl_parameters:
+  net.ipv4.conf.all.accept_redirects: 0
+  net.ipv4.conf.default.accept_redirects: 0
+  net.ipv4.conf.all.send_redirects: 0
+  net.ipv4.conf.default.send_redirects: 0
+  net.ipv4.conf.all.accept_source_route: 0
+  net.ipv4.conf.default.accept_source_route: 0
+  net.ipv4.conf.all.log_martians: 1
+  net.ipv4.conf.default.log_martians: 1
+  net.ipv4.icmp_echo_ignore_broadcasts: 1
+  net.ipv4.icmp_ignore_bogus_error_responses: 1
+  kernel.randomize_va_space: 2
+  fs.suid_dumpable: 0

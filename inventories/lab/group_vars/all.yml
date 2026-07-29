@@ -19,5 +19,5 @@ security_manage_fail2ban: true
 
 security_manage_auditd: true
 security_manage_chrony: true
-security_manage_sysctl: false
+security_manage_sysctl: true
 security_manage_firewall: false

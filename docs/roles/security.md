@@ -13,10 +13,10 @@ Current capabilities include:
 - Fail2ban
 - Linux Audit Framework (Auditd)
 - Chrony time synchronization
+- Sysctl kernel hardening
 
 Future capabilities will include:
 
-- Kernel hardening (sysctl)
 - Host firewall (UFW)
 
 ---
@@ -31,6 +31,7 @@ The security role is responsible for:
 - Protecting SSH against brute-force attacks with Fail2ban
 - Configuring Linux Audit Framework (Auditd)
 - Configuring secure time synchronization with Chrony
+- Applying baseline kernel and network hardening through Sysctl
 - Maintaining idempotent security configuration
 
 The role intentionally avoids managing user accounts, SSH daemon configuration, or general operating system configuration, which are handled by other roles.
@@ -239,6 +240,31 @@ By default, the role configures Chrony as an NTP client only. Networks allowed t
 
 ---
 
+# Sysctl Hardening
+
+When enabled, the role:
+
+- Generates a managed Sysctl configuration
+- Deploys the configuration to `/etc/sysctl.d/99-security.conf`
+- Applies the settings through `sysctl --system`
+- Reloads kernel parameters only when the configuration changes
+
+The default baseline includes controls for:
+
+- ICMP redirect handling
+- Source-routed packets
+- Martian packet logging
+- Broadcast ICMP handling
+- Bogus ICMP error responses
+- Address Space Layout Randomization (ASLR)
+- Core dumps from privileged processes
+
+The parameters are defined through the `security_sysctl_parameters` variable, allowing inventory-specific overrides without modifying the role.
+
+The role uses a dedicated drop-in file instead of editing `/etc/sysctl.conf`, keeping Ansible-managed settings isolated from distribution and administrator defaults.
+
+---
+
 # Handlers
 
 The role currently includes:
@@ -246,6 +272,7 @@ The role currently includes:
 - `Restart Fail2ban`
 - `Load Auditd rules`
 - `Restart Chrony`
+- `Reload Sysctl settings`
 
 Handlers execute only when configuration changes occur, ensuring services are only restarted or reloaded when necessary.
 
@@ -287,6 +314,9 @@ The role has been validated by confirming:
 - Audit rules successfully loaded
 - Chrony service enabled
 - Chrony service running
+- Managed Sysctl configuration deployed
+- Persistent Sysctl values verified
+- Live kernel values verified
 - Handler execution
 - Idempotent behavior
 
@@ -316,6 +346,16 @@ systemctl is-active chrony
 chronyc tracking
 
 chronyc sources -v
+
+cat /etc/sysctl.d/99-security.conf
+
+sysctl net.ipv4.conf.all.accept_redirects
+
+sysctl net.ipv4.conf.all.log_martians
+
+sysctl kernel.randomize_va_space
+
+sysctl fs.suid_dumpable
 ```
 
 ---
@@ -390,5 +430,5 @@ Implemented capabilities:
 - ✅ Fail2ban
 - ✅ Auditd
 - ✅ Chrony
-- ⏳ Sysctl hardening
+- ✅ Sysctl hardening
 - ⏳ UFW firewall

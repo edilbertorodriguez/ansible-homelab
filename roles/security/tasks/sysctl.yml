@@ -1,2 +1,13 @@
 ---
-# Sysctl hardening will be implemented in a later milestone.
+###############################################################################
+# Configure Sysctl hardening
+###############################################################################
+
+- name: Deploy Sysctl hardening configuration
+  ansible.builtin.template:
+    src: 99-security.conf.j2
+    dest: /etc/sysctl.d/99-security.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Reload Sysctl settings
