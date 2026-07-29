@@ -265,6 +265,88 @@ The role uses a dedicated drop-in file instead of editing `/etc/sysctl.conf`, ke
 
 ---
 
+## UFW firewall
+
+The role can install, configure, and enable UFW on managed Linux systems.
+
+Firewall management is controlled with:
+
+```yaml
+security_manage_firewall: true
+```
+
+The role applies the following default policies:
+
+```yaml
+security_firewall_default_incoming_policy: deny
+security_firewall_default_outgoing_policy: allow
+security_firewall_default_routed_policy: deny
+```
+
+SSH access is configured before the firewall is enabled to reduce the risk of locking out the administrator.
+
+Example:
+
+```yaml
+security_firewall_allow_ssh: true
+security_firewall_ssh_port: 22
+security_firewall_ssh_source: 10.10.60.0/24
+```
+
+Additional allowed services can be defined with:
+
+```yaml
+security_firewall_allowed_rules:
+  - port: 443
+    proto: tcp
+    src: 10.10.60.0/24
+    comment: Allow HTTPS from the lab network
+
+  - port: 53
+    proto: udp
+    src: 10.10.60.0/24
+    comment: Allow DNS from the lab network
+```
+
+The firewall tasks are executed in this order:
+
+1. Install UFW.
+2. Configure default policies.
+3. Add the SSH allow rule.
+4. Add any additional allow rules.
+5. Enable UFW.
+
+This ordering ensures that required administrative access is permitted before the firewall becomes active.
+
+### Verification
+
+Check the active firewall configuration with:
+
+```bash
+sudo ufw status verbose
+```
+
+Expected lab configuration:
+
+```text
+Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), disabled (routed)
+
+To                         Action      From
+--                         ------      ----
+22/tcp                     ALLOW IN    10.10.60.0/24
+```
+
+The role was verified for idempotency. A second execution completed with:
+
+```text
+changed=0
+failed=0
+```
+
+---
+
 # Handlers
 
 The role currently includes:

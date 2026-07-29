@@ -1,2 +1,52 @@
 ---
-# Firewall configuration will be implemented in a later milestone.
+###############################################################################
+# Configure UFW firewall
+###############################################################################
+
+- name: Install UFW packages
+  ansible.builtin.apt:
+    name: "{{ security_firewall_packages }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Set default incoming policy  # noqa args[module]
+  community.general.ufw:
+    direction: incoming
+    policy: "{{ security_firewall_default_incoming_policy }}"
+
+- name: Set default outgoing policy  # noqa args[module]
+  community.general.ufw:
+    direction: outgoing
+    policy: "{{ security_firewall_default_outgoing_policy }}"
+
+- name: Set default routed policy  # noqa args[module]
+  community.general.ufw:
+    direction: routed
+    policy: "{{ security_firewall_default_routed_policy }}"
+
+- name: Allow SSH
+  community.general.ufw:
+    rule: allow
+    port: "{{ security_firewall_ssh_port }}"
+    proto: tcp
+    src: "{{ security_firewall_ssh_source }}"
+  when:
+    - security_firewall_allow_ssh | bool
+
+- name: Configure additional allowed firewall rules
+  community.general.ufw:
+    rule: allow
+    port: "{{ item.port | string }}"
+    proto: "{{ item.proto | default('tcp') }}"
+    src: "{{ item.src | default('any') }}"
+    comment: "{{ item.comment | default(omit) }}"
+  loop: "{{ security_firewall_allowed_rules }}"
+  loop_control:
+    label: >-
+      {{ item.src | default('any') }}
+      -> {{ item.port }}/{{ item.proto | default('tcp') }}
+
+- name: Enable UFW firewall
+  community.general.ufw:
+    state: enabled

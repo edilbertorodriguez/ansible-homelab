@@ -35,3 +35,8 @@
   ansible.builtin.import_tasks: sysctl.yml
   when:
     - security_manage_sysctl | bool
+
+- name: Configure UFW firewall
+  ansible.builtin.import_tasks: firewall.yml
+  when:
+    - security_manage_firewall | bool

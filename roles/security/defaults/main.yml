@@ -99,3 +99,20 @@ security_sysctl_parameters:
   net.ipv4.icmp_ignore_bogus_error_responses: 1
   kernel.randomize_va_space: 2
   fs.suid_dumpable: 0
+
+###############################################################################
+# UFW firewall
+###############################################################################
+
+security_firewall_packages:
+  - ufw
+
+security_firewall_default_incoming_policy: deny
+security_firewall_default_outgoing_policy: allow
+security_firewall_default_routed_policy: deny
+
+security_firewall_allow_ssh: true
+security_firewall_ssh_port: 22
+security_firewall_ssh_source: any
+
+security_firewall_allowed_rules: []
