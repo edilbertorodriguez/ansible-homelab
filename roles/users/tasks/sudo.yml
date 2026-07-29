@@ -1,0 +1,35 @@
+---
+###############################################################################
+# Manage sudo policy
+###############################################################################
+
+- name: Install sudo policy for privileged users
+  ansible.builtin.copy:
+    content: |
+      {{ item.username }} ALL=(ALL:ALL) {{
+        'NOPASSWD: ALL'
+        if item.sudo_passwordless
+           | default(users_sudo_passwordless)
+           | bool
+        else 'ALL'
+      }}
+    dest: "/etc/sudoers.d/{{ item.username }}"
+    owner: root
+    group: root
+    mode: "0440"
+    validate: "/usr/sbin/visudo -cf %s"
+  loop: "{{ users_accounts }}"
+  loop_control:
+    label: "{{ item.username }}"
+  when:
+    - item.sudo | default(false) | bool
+
+- name: Remove sudo policy for non-privileged users
+  ansible.builtin.file:
+    path: "/etc/sudoers.d/{{ item.username }}"
+    state: absent
+  loop: "{{ users_accounts }}"
+  loop_control:
+    label: "{{ item.username }}"
+  when:
+    - not (item.sudo | default(false) | bool)

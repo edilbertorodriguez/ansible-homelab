@@ -12,6 +12,9 @@ users_manage_authorized_keys: true
 # Manage sudo policy for declared users.
 users_manage_sudo: true
 
+# Grant passwordless sudo by default when sudo access is enabled.
+users_sudo_passwordless: false
+
 # Directory containing managed SSH public-key files.
 users_ssh_keys_directory: ssh_keys
 
