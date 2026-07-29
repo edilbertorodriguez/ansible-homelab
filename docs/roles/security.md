@@ -12,10 +12,10 @@ Current capabilities include:
 - Automatic security updates
 - Fail2ban
 - Linux Audit Framework (Auditd)
+- Chrony time synchronization
 
 Future capabilities will include:
 
-- Chrony
 - Kernel hardening (sysctl)
 - Host firewall (UFW)
 
@@ -30,6 +30,7 @@ The security role is responsible for:
 - Configuring unattended security updates
 - Protecting SSH against brute-force attacks with Fail2ban
 - Configuring Linux Audit Framework (Auditd)
+- Configuring secure time synchronization with Chrony
 - Maintaining idempotent security configuration
 
 The role intentionally avoids managing user accounts, SSH daemon configuration, or general operating system configuration, which are handled by other roles.
@@ -211,12 +212,40 @@ The role intentionally manages a dedicated rules file instead of modifying distr
 
 ---
 
+# Chrony
+
+When enabled, the role:
+
+- Installs Chrony
+- Deploys a managed Chrony configuration
+- Enables the service
+- Starts the service
+- Restarts Chrony automatically when configuration changes
+
+By default, the role configures the following public NTP servers:
+
+- time.cloudflare.com
+- time.google.com
+
+Configuration is generated from an Ansible template and stored in:
+
+```text
+/etc/chrony/chrony.conf
+```
+
+The list of NTP servers can be customized through the `security_chrony_servers` variable.
+
+By default, the role configures Chrony as an NTP client only. Networks allowed to synchronize with this host can be defined through the `security_chrony_allow_networks` variable if the server is intended to act as an internal NTP server.
+
+---
+
 # Handlers
 
 The role currently includes:
 
 - `Restart Fail2ban`
 - `Load Auditd rules`
+- `Restart Chrony`
 
 Handlers execute only when configuration changes occur, ensuring services are only restarted or reloaded when necessary.
 
@@ -256,6 +285,8 @@ The role has been validated by confirming:
 - Auditd service enabled
 - Auditd service running
 - Audit rules successfully loaded
+- Chrony service enabled
+- Chrony service running
 - Handler execution
 - Idempotent behavior
 
@@ -277,6 +308,14 @@ systemctl is-enabled auditd
 systemctl is-active auditd
 
 sudo auditctl -l
+
+systemctl is-enabled chrony
+
+systemctl is-active chrony
+
+chronyc tracking
+
+chronyc sources -v
 ```
 
 ---
@@ -334,7 +373,6 @@ This provides early failure and predictable execution.
 
 Planned capabilities include:
 
-- Chrony
 - Kernel hardening (sysctl)
 - UFW firewall
 - Additional security utilities (e.g., Lynis, AIDE)
@@ -351,6 +389,6 @@ Implemented capabilities:
 - ✅ Automatic security updates
 - ✅ Fail2ban
 - ✅ Auditd
-- ⏳ Chrony
+- ✅ Chrony
 - ⏳ Sysctl hardening
 - ⏳ UFW firewall

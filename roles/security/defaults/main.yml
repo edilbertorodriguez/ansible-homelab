@@ -68,3 +68,16 @@ security_auditd_rules:
   - "-w /var/log/audit/ -p wa -k audit_logs"
   - "-a always,exit -F arch=b64 -S unlink,unlinkat,rename,renameat -F auid>=1000 -F auid!=unset -k file_deletion"
   - "-a always,exit -F arch=b32 -S unlink,unlinkat,rename,renameat -F auid>=1000 -F auid!=unset -k file_deletion"
+
+###############################################################################
+# Chrony configuration
+###############################################################################
+
+security_chrony_packages:
+  - chrony
+
+security_chrony_servers:
+  - time.cloudflare.com iburst
+  - time.google.com iburst
+
+security_chrony_allow_networks: []

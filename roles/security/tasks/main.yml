@@ -25,3 +25,8 @@
   ansible.builtin.import_tasks: auditd.yml
   when:
     - security_manage_auditd | bool
+
+- name: Configure Chrony time synchronization
+  ansible.builtin.import_tasks: chrony.yml
+  when:
+    - security_manage_chrony | bool

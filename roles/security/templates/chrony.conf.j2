@@ -1,0 +1,20 @@
+# Managed by Ansible.
+# Local changes will be overwritten.
+
+{% for server in security_chrony_servers %}
+server {{ server }}
+{% endfor %}
+
+driftfile /var/lib/chrony/chrony.drift
+
+makestep 1.0 3
+
+rtcsync
+
+keyfile /etc/chrony/chrony.keys
+
+leapsectz right/UTC
+
+{% for network in security_chrony_allow_networks %}
+allow {{ network }}
+{% endfor %}
