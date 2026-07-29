@@ -9,3 +9,10 @@
     state: restarted
   when:
     - not ansible_check_mode
+
+- name: Load Auditd rules
+  ansible.builtin.command:
+    cmd: augenrules --load
+  changed_when: true
+  when:
+    - not ansible_check_mode

@@ -10,11 +10,11 @@ Current capabilities include:
 
 - Platform validation
 - Automatic security updates
-- Fail2ban SSH protection
+- Fail2ban
+- Linux Audit Framework (Auditd)
 
 Future capabilities will include:
 
-- Auditd
 - Chrony
 - Kernel hardening (sysctl)
 - Host firewall (UFW)
@@ -26,9 +26,10 @@ Future capabilities will include:
 The security role is responsible for:
 
 - Validating supported operating systems
-- Installing security-related packages
+- Installing packages required by enabled security features
 - Configuring unattended security updates
 - Protecting SSH against brute-force attacks with Fail2ban
+- Configuring Linux Audit Framework (Auditd)
 - Maintaining idempotent security configuration
 
 The role intentionally avoids managing user accounts, SSH daemon configuration, or general operating system configuration, which are handled by other roles.
@@ -176,15 +177,48 @@ Configuration is stored in:
 
 ---
 
+# Auditd
+
+When enabled, the role:
+
+- Installs Auditd
+- Deploys a managed audit rules file
+- Enables the service
+- Starts the service
+- Reloads audit rules automatically when configuration changes
+
+The managed rules monitor:
+
+- User account database changes
+- Privileged configuration changes
+- SSH daemon configuration
+- Audit log modifications
+- File deletion activity performed by interactive users
+
+Configuration is stored in:
+
+```text
+/etc/audit/rules.d/99-security.rules
+```
+
+Audit rules are loaded using:
+
+```bash
+augenrules --load
+```
+
+The role intentionally manages a dedicated rules file instead of modifying distribution-provided rules. This approach simplifies maintenance, improves portability, and keeps all managed Auditd configuration isolated from operating system defaults.
+
+---
+
 # Handlers
 
 The role currently includes:
 
-```
-Restart Fail2ban
-```
+- `Restart Fail2ban`
+- `Load Auditd rules`
 
-Handlers execute only when configuration changes occur.
+Handlers execute only when configuration changes occur, ensuring services are only restarted or reloaded when necessary.
 
 ---
 
@@ -200,14 +234,14 @@ Validation included:
 - Service verification
 - Repeated execution
 
-Second execution produced:
+A second execution produced:
 
 ```text
 changed=0
 failed=0
 ```
 
-demonstrating full idempotency.
+demonstrating that the role is fully idempotent.
 
 ---
 
@@ -219,6 +253,9 @@ The role has been validated by confirming:
 - Fail2ban service running
 - SSH jail loaded
 - Automatic updates configured
+- Auditd service enabled
+- Auditd service running
+- Audit rules successfully loaded
 - Handler execution
 - Idempotent behavior
 
@@ -234,6 +271,12 @@ sudo fail2ban-client status
 sudo fail2ban-client status sshd
 
 apt-config dump | grep Periodic
+
+systemctl is-enabled auditd
+
+systemctl is-active auditd
+
+sudo auditctl -l
 ```
 
 ---
@@ -248,6 +291,7 @@ Each security capability is isolated into its own task file.
 
 Examples:
 
+- validation.yml
 - fail2ban.yml
 - unattended_upgrades.yml
 - auditd.yml
@@ -290,24 +334,23 @@ This provides early failure and predictable execution.
 
 Planned capabilities include:
 
-- Linux Audit Framework (auditd)
 - Chrony
-- Kernel hardening
+- Kernel hardening (sysctl)
 - UFW firewall
-- Additional security utilities
-- CIS benchmark alignment
+- Additional security utilities (e.g., Lynis, AIDE)
+- CIS Benchmark alignment
 - Automated compliance validation
 
 ---
 
 # Status
 
-Current implementation:
+Implemented capabilities:
 
 - ✅ Platform validation
 - ✅ Automatic security updates
 - ✅ Fail2ban
-- ⏳ Auditd
+- ✅ Auditd
 - ⏳ Chrony
 - ⏳ Sysctl hardening
 - ⏳ UFW firewall

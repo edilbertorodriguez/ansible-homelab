@@ -17,7 +17,7 @@ security_manage_packages: false
 security_manage_unattended_upgrades: true
 security_manage_fail2ban: true
 
-security_manage_auditd: false
+security_manage_auditd: true
 security_manage_chrony: false
 security_manage_sysctl: false
 security_manage_firewall: false
