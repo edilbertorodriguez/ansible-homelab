@@ -1,0 +1,11 @@
+---
+###############################################################################
+# Security role handlers
+###############################################################################
+
+- name: Restart Fail2ban
+  ansible.builtin.service:
+    name: fail2ban
+    state: restarted
+  when:
+    - not ansible_check_mode

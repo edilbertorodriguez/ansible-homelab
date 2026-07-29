@@ -1,0 +1,45 @@
+---
+###############################################################################
+# Security role defaults
+###############################################################################
+
+###############################################################################
+# Feature flags
+###############################################################################
+
+# Install shared baseline security packages.
+security_manage_packages: false
+
+# Configure automatic security updates.
+security_manage_unattended_upgrades: true
+
+# Configure Fail2ban.
+security_manage_fail2ban: false
+
+# Configure Linux auditing.
+security_manage_auditd: false
+
+# Configure time synchronization.
+security_manage_chrony: false
+
+# Apply kernel and network hardening.
+security_manage_sysctl: false
+
+# Configure the host firewall.
+security_manage_firewall: false
+
+###############################################################################
+# Package configuration
+###############################################################################
+
+# Packages required for unattended security updates.
+security_unattended_packages:
+  - unattended-upgrades
+  - apt-listchanges
+
+# Optional shared security packages.
+#
+# Keep this list empty by default. Individual security features should install
+# their own required packages. Populate this list only if you want additional
+# common security utilities installed regardless of enabled features.
+security_packages: []
