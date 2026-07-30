@@ -1,0 +1,42 @@
+---
+###############################################################################
+# Security role task orchestration
+###############################################################################
+
+- name: Validate security role configuration
+  ansible.builtin.import_tasks: validation.yml
+
+- name: Install baseline security packages
+  ansible.builtin.import_tasks: packages.yml
+  when:
+    - security_manage_packages | bool
+
+- name: Configure unattended security updates
+  ansible.builtin.import_tasks: unattended_upgrades.yml
+  when:
+    - security_manage_unattended_upgrades | bool
+
+- name: Configure Fail2ban
+  ansible.builtin.import_tasks: fail2ban.yml
+  when:
+    - security_manage_fail2ban | bool
+
+- name: Configure Linux auditing
+  ansible.builtin.import_tasks: auditd.yml
+  when:
+    - security_manage_auditd | bool
+
+- name: Configure Chrony time synchronization
+  ansible.builtin.import_tasks: chrony.yml
+  when:
+    - security_manage_chrony | bool
+
+- name: Configure Sysctl hardening
+  ansible.builtin.import_tasks: sysctl.yml
+  when:
+    - security_manage_sysctl | bool
+
+- name: Configure UFW firewall
+  ansible.builtin.import_tasks: firewall.yml
+  when:
+    - security_manage_firewall | bool

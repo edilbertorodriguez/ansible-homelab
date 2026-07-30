@@ -8,6 +8,16 @@ This repository serves as my personal automation framework for managing my home 
 
 ---
 
+# Architecture
+
+The diagram below illustrates the end-to-end automation workflow implemented by this repository, from source control and continuous integration through configuration management and deployment to managed Ubuntu systems.
+
+![Ansible Homelab Architecture](docs/architecture.svg)
+
+For additional implementation details, see the [Architecture Documentation](docs/architecture.md).
+
+---
+
 # Project Goals
 
 - Develop reusable and idempotent Ansible roles.
@@ -26,11 +36,18 @@ This repository serves as my personal automation framework for managing my home 
 
 - Ansible Core
 - Ubuntu Server 24.04 LTS
+- Git
+- GitHub
 - GitHub Actions
 - YAML
 - Jinja2 Templates
 - OpenSSH
 - Proxmox VE
+- UFW
+- Fail2ban
+- auditd
+- Chrony
+- Linux Kernel hardening (sysctl)
 
 ## Planned
 
@@ -58,6 +75,28 @@ This repository serves as my personal automation framework for managing my home 
 - Handler-based service management
 - Host-specific feature flags
 - Idempotent configuration management
+
+## Security Role
+
+- Security package installation
+- Unattended security updates
+- Fail2ban configuration
+- Linux Audit Framework (auditd)
+- Chrony time synchronization
+- Kernel hardening using sysctl
+- UFW firewall management
+- Inventory-driven firewall rules
+- Feature flag support
+- Idempotent security configuration
+
+## Users Role
+
+- Local Linux user management
+- Linux group management
+- SSH authorized key deployment
+- Sudo policy management
+- Inventory-driven user definitions
+- Validation and idempotent execution
 
 ## Code Quality
 
@@ -93,26 +132,40 @@ ansible-homelab/
 │   └── workflows/
 │       └── ansible-ci.yml
 ├── docs/
+│   ├── architecture.drawio
+│   ├── architecture.md
+│   ├── architecture.svg
+│   ├── inventory.md
+│   ├── roles/
+│   └── testing.md
 ├── inventories/
-│   └── homelab/
-│       ├── group_vars/
-│       ├── host_vars/
-│       └── hosts.yml
+│   ├── homelab/
+│   └── lab/
 ├── playbooks/
 │   ├── bootstrap.yml
+│   ├── bootstrap-ubuntu.yml
 │   ├── infrastructure.yml
 │   ├── monitoring.yml
 │   ├── security.yml
 │   └── updates.yml
 ├── roles/
-│   └── common/
+│   ├── common/
+│   │   ├── defaults/
+│   │   ├── handlers/
+│   │   ├── tasks/
+│   │   └── templates/
+│   ├── security/
+│   │   ├── defaults/
+│   │   ├── handlers/
+│   │   ├── tasks/
+│   │   └── templates/
+│   └── users/
 │       ├── defaults/
-│       ├── handlers/
-│       ├── tasks/
-│       └── templates/
+│       └── tasks/
 ├── ansible.cfg
-├── site.yml
-└── README.md
+├── LICENSE
+├── README.md
+└── site.yml
 ```
 
 ---
@@ -145,24 +198,32 @@ Every push automatically executes GitHub Actions to verify repository integrity 
 
 - Linux bootstrap automation
 - Common role
+- Users role
+- Security role
 - Package management
 - Hostname management
 - Timezone management
-- SSH daemon management
-- GitHub Actions pipeline
+- OpenSSH daemon management
+- SSH configuration validation
+- Local user management
+- Linux group management
+- SSH authorized key deployment
+- Sudo policy management
+- Unattended security updates
+- Fail2ban configuration
+- Linux Audit Framework (auditd)
+- Chrony time synchronization
+- Linux kernel hardening (sysctl)
+- UFW firewall management
+- GitHub Actions CI
 
 ## In Progress
 
-- Documentation
-- Users role
+- Documentation refinement
+- Repository polish
 
 ## Planned
 
-- User management
-- SSH authorized keys
-- Sudo management
-- UFW firewall
-- Fail2Ban
 - Docker role
 - Prometheus Node Exporter
 - Wazuh Agent
@@ -176,15 +237,18 @@ Every push automatically executes GitHub Actions to verify repository integrity 
 
 # Future Repository Ecosystem
 
-This repository is part of a larger Infrastructure Engineering portfolio.
+This repository is part of a broader Infrastructure Engineering and Cybersecurity portfolio.
 
-| Repository | Purpose |
-|------------|---------|
-| ansible-homelab | Configuration Management |
-| terraform-proxmox-lab | Infrastructure Provisioning |
-| puppet-homelab *(planned)* | Continuous Configuration Enforcement |
+| Repository | Focus | Status |
+|------------|-------|--------|
+| `ansible-homelab` | Linux configuration management and security hardening | Active |
+| `terraform-proxmox-lab` | Proxmox infrastructure provisioning | Planned |
+| `monitoring-stack` | Prometheus, Node Exporter, and Grafana monitoring | Planned |
+| `wazuh-lab` | Security monitoring and detection engineering | Planned |
+| `kubernetes-homelab` | Container orchestration and service deployment | Planned |
+| `puppet-homelab` | Continuous configuration enforcement | Planned |
 
-Together these projects demonstrate a complete Infrastructure as Code workflow from provisioning to long-term configuration management.
+Together, these projects are intended to demonstrate an end-to-end Infrastructure as Code workflow covering infrastructure provisioning, configuration management, observability, security monitoring, and continuous enforcement.
 
 ---
 

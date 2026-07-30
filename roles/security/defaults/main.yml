@@ -1,0 +1,118 @@
+---
+###############################################################################
+# Security role defaults
+###############################################################################
+
+###############################################################################
+# Feature flags
+###############################################################################
+
+# Install shared baseline security packages.
+security_manage_packages: false
+
+# Configure automatic security updates.
+security_manage_unattended_upgrades: true
+
+# Configure Fail2ban.
+security_manage_fail2ban: false
+
+# Configure Linux auditing.
+security_manage_auditd: false
+
+# Configure time synchronization.
+security_manage_chrony: false
+
+# Apply kernel and network hardening.
+security_manage_sysctl: false
+
+# Configure the host firewall.
+security_manage_firewall: false
+
+###############################################################################
+# Package configuration
+###############################################################################
+
+# Packages required for unattended security updates.
+security_unattended_packages:
+  - unattended-upgrades
+  - apt-listchanges
+
+# Optional shared security packages.
+#
+# Keep this list empty by default. Individual security features should install
+# their own required packages. Populate this list only if you want additional
+# common security utilities installed regardless of enabled features.
+security_packages: []
+
+###############################################################################
+# Auditd configuration
+###############################################################################
+
+# Packages required for Linux auditing.
+security_auditd_packages:
+  - auditd
+
+# Managed audit rules.
+#
+# These rules monitor changes to identity files, privilege configuration,
+# SSH configuration, and audit logs. They also record file deletion activity
+# performed by interactive users.
+security_auditd_rules:
+  - "-w /etc/passwd -p wa -k identity"
+  - "-w /etc/group -p wa -k identity"
+  - "-w /etc/shadow -p wa -k identity"
+  - "-w /etc/gshadow -p wa -k identity"
+  - "-w /etc/sudoers -p wa -k privilege_scope"
+  - "-w /etc/sudoers.d/ -p wa -k privilege_scope"
+  - "-w /etc/ssh/sshd_config -p wa -k ssh_configuration"
+  - "-w /var/log/audit/ -p wa -k audit_logs"
+  - "-a always,exit -F arch=b64 -S unlink,unlinkat,rename,renameat -F auid>=1000 -F auid!=unset -k file_deletion"
+  - "-a always,exit -F arch=b32 -S unlink,unlinkat,rename,renameat -F auid>=1000 -F auid!=unset -k file_deletion"
+
+###############################################################################
+# Chrony configuration
+###############################################################################
+
+security_chrony_packages:
+  - chrony
+
+security_chrony_servers:
+  - time.cloudflare.com iburst
+  - time.google.com iburst
+
+security_chrony_allow_networks: []
+
+###############################################################################
+# Sysctl hardening
+###############################################################################
+
+security_sysctl_parameters:
+  net.ipv4.conf.all.accept_redirects: 0
+  net.ipv4.conf.default.accept_redirects: 0
+  net.ipv4.conf.all.send_redirects: 0
+  net.ipv4.conf.default.send_redirects: 0
+  net.ipv4.conf.all.accept_source_route: 0
+  net.ipv4.conf.default.accept_source_route: 0
+  net.ipv4.conf.all.log_martians: 1
+  net.ipv4.conf.default.log_martians: 1
+  net.ipv4.icmp_echo_ignore_broadcasts: 1
+  net.ipv4.icmp_ignore_bogus_error_responses: 1
+  kernel.randomize_va_space: 2
+  fs.suid_dumpable: 0
+
+###############################################################################
+# UFW firewall
+###############################################################################
+
+security_firewall_packages:
+  - ufw
+
+security_firewall_default_incoming_policy: deny
+security_firewall_default_outgoing_policy: allow
+security_firewall_default_routed_policy: deny
+
+security_firewall_allow_ssh: true
+security_firewall_ssh_port: 22
+security_firewall_ssh_source: any
+
+security_firewall_allowed_rules: []

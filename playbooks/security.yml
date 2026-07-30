@@ -26,6 +26,9 @@
   become: true
   gather_facts: true
 
+  roles:
+    - security
+
   tasks:
     - name: Confirm managed host connectivity
       ansible.builtin.ping:

@@ -1,0 +1,11 @@
+---
+###############################################################################
+# Install baseline security packages
+###############################################################################
+
+- name: Install baseline security packages
+  ansible.builtin.apt:
+    name: "{{ security_packages }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600

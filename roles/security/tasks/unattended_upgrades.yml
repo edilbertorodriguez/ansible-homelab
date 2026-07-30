@@ -1,0 +1,21 @@
+---
+###############################################################################
+# Configure unattended security updates
+###############################################################################
+
+- name: Install unattended update packages
+  ansible.builtin.apt:
+    name: "{{ security_unattended_packages }}"
+    state: present
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Enable periodic APT operations
+  ansible.builtin.copy:
+    dest: /etc/apt/apt.conf.d/20auto-upgrades
+    owner: root
+    group: root
+    mode: "0644"
+    content: |
+      APT::Periodic::Update-Package-Lists "1";
+      APT::Periodic::Unattended-Upgrade "1";
