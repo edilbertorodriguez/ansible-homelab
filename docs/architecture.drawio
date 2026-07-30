@@ -1,0 +1,139 @@
+<mxfile host="app.diagrams.net" modified="2026-07-29T00:00:00.000Z" agent="ChatGPT" version="24.7.17">
+  <diagram id="ansible-homelab-v2" name="Architecture v2">
+    <mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1"
+      page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- Header -->
+        <mxCell id="header" value="ANSIBLE HOMELAB ARCHITECTURE"
+          style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F2937;strokeColor=#1F2937;fontColor=#FFFFFF;fontSize=28;fontStyle=1;align=center;verticalAlign=middle;"
+          vertex="1" parent="1">
+          <mxGeometry x="80" y="30" width="1440" height="62" as="geometry"/>
+        </mxCell>
+        <mxCell id="subtitle" value="Infrastructure as Code • Configuration Management • Security Hardening"
+          style="text;html=1;align=center;verticalAlign=middle;fontSize=15;fontColor=#4B5563;"
+          vertex="1" parent="1">
+          <mxGeometry x="320" y="96" width="960" height="30" as="geometry"/>
+        </mxCell>
+
+        <!-- Development layer -->
+        <mxCell id="devBand" value="DEVELOPMENT &amp; CONTROL"
+          style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E5E7EB;strokeColor=#CBD5E1;fontColor=#374151;fontSize=14;fontStyle=1;align=left;spacingLeft=16;"
+          vertex="1" parent="1">
+          <mxGeometry x="80" y="140" width="1440" height="38" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="git" value="&lt;b&gt;Git&lt;/b&gt;&lt;br&gt;Version control"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;fontSize=14;spacing=8;"
+          vertex="1" parent="1">
+          <mxGeometry x="210" y="210" width="220" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="github" value="&lt;b&gt;GitHub Repository&lt;/b&gt;&lt;br&gt;Source, reviews, history"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#64748B;fontSize=14;spacing=8;"
+          vertex="1" parent="1">
+          <mxGeometry x="500" y="210" width="260" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="controller" value="&lt;b&gt;Ansible Controller&lt;/b&gt;&lt;br&gt;tf-controller VM&lt;br&gt;Ubuntu Server 24.04 LTS&lt;br&gt;Ansible Core"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DBEAFE;strokeColor=#2563EB;fontSize=15;spacing=8;"
+          vertex="1" parent="1">
+          <mxGeometry x="870" y="195" width="330" height="110" as="geometry"/>
+        </mxCell>
+        <mxCell id="meta" value="&lt;b&gt;Project:&lt;/b&gt; ansible-homelab&lt;br&gt;&lt;b&gt;Author:&lt;/b&gt; Edilberto Rodriguez&lt;br&gt;&lt;b&gt;Release:&lt;/b&gt; v1.0.0 candidate&lt;br&gt;&lt;b&gt;Updated:&lt;/b&gt; July 2026"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#CBD5E1;fontSize=12;spacing=8;"
+          vertex="1" parent="1">
+          <mxGeometry x="1260" y="195" width="230" height="110" as="geometry"/>
+        </mxCell>
+
+        <!-- Validation -->
+        <mxCell id="validationBand" value="CONTINUOUS VALIDATION"
+          style="rounded=0;whiteSpace=wrap;html=1;fillColor=#EDE9FE;strokeColor=#C4B5FD;fontColor=#5B21B6;fontSize=14;fontStyle=1;align=left;spacingLeft=16;"
+          vertex="1" parent="1">
+          <mxGeometry x="80" y="340" width="1440" height="38" as="geometry"/>
+        </mxCell>
+        <mxCell id="ci" value="&lt;b&gt;GitHub Actions CI&lt;/b&gt;&lt;br&gt;yamllint &amp;nbsp;•&amp;nbsp; ansible-lint &amp;nbsp;•&amp;nbsp; syntax-check"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F3E8FF;strokeColor=#7C3AED;fontSize=15;spacing=8;"
+          vertex="1" parent="1">
+          <mxGeometry x="510" y="410" width="580" height="82" as="geometry"/>
+        </mxCell>
+
+        <!-- Configuration -->
+        <mxCell id="configBand" value="CONFIGURATION ENGINE"
+          style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FEF3C7;strokeColor=#FCD34D;fontColor=#92400E;fontSize=14;fontStyle=1;align=left;spacingLeft=16;"
+          vertex="1" parent="1">
+          <mxGeometry x="80" y="530" width="1440" height="38" as="geometry"/>
+        </mxCell>
+        <mxCell id="inventory" value="&lt;b&gt;Inventory&lt;/b&gt;&lt;br&gt;homelab / lab&lt;br&gt;group_vars / host_vars"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFBEB;strokeColor=#D97706;fontSize=14;spacing=8;"
+          vertex="1" parent="1">
+          <mxGeometry x="190" y="605" width="260" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="flags" value="&lt;b&gt;Feature Flags&lt;/b&gt;&lt;br&gt;Host-specific and environment-specific behavior"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFBEB;strokeColor=#D97706;fontSize=14;spacing=8;"
+          vertex="1" parent="1">
+          <mxGeometry x="500" y="605" width="300" height="100" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="common" value="&lt;b&gt;COMMON ROLE&lt;/b&gt;&lt;br&gt;Packages&lt;br&gt;Hostname&lt;br&gt;Timezone&lt;br&gt;OpenSSH"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;fontSize=14;spacing=8;"
+          vertex="1" parent="1">
+          <mxGeometry x="860" y="585" width="190" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="security" value="&lt;b&gt;SECURITY ROLE&lt;/b&gt;&lt;br&gt;UFW / Fail2ban&lt;br&gt;auditd / Chrony&lt;br&gt;sysctl hardening&lt;br&gt;Unattended updates"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;fontSize=14;spacing=8;"
+          vertex="1" parent="1">
+          <mxGeometry x="1080" y="585" width="210" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="users" value="&lt;b&gt;USERS ROLE&lt;/b&gt;&lt;br&gt;Accounts&lt;br&gt;Groups&lt;br&gt;Authorized keys&lt;br&gt;Sudo policies"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#DCFCE7;strokeColor=#16A34A;fontSize=14;spacing=8;"
+          vertex="1" parent="1">
+          <mxGeometry x="1320" y="585" width="170" height="140" as="geometry"/>
+        </mxCell>
+
+        <!-- Infrastructure -->
+        <mxCell id="infraBand" value="TARGET INFRASTRUCTURE"
+          style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F3F4F6;strokeColor=#D1D5DB;fontColor=#374151;fontSize=14;fontStyle=1;align=left;spacingLeft=16;"
+          vertex="1" parent="1">
+          <mxGeometry x="80" y="765" width="1440" height="38" as="geometry"/>
+        </mxCell>
+        <mxCell id="proxmox" value="&lt;b&gt;Proxmox Virtual Machines&lt;/b&gt;&lt;br&gt;Ubuntu Server workloads"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6B7280;fontSize=14;spacing=8;"
+          vertex="1" parent="1">
+          <mxGeometry x="230" y="840" width="300" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="physical" value="&lt;b&gt;Physical Linux Servers&lt;/b&gt;&lt;br&gt;Managed hosts"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6B7280;fontSize=14;spacing=8;"
+          vertex="1" parent="1">
+          <mxGeometry x="650" y="840" width="300" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="rpi" value="&lt;b&gt;Raspberry Pi Systems&lt;/b&gt;&lt;br&gt;Linux services and edge nodes"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6B7280;fontSize=14;spacing=8;"
+          vertex="1" parent="1">
+          <mxGeometry x="1070" y="840" width="300" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Future -->
+        <mxCell id="future" value="&lt;b&gt;FUTURE CAPABILITIES&lt;/b&gt;&lt;br&gt;Terraform • Proxmox API • Docker • Prometheus • Wazuh • Puppet • Molecule • Ansible Vault"
+          style="rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=#FFFFFF;strokeColor=#9CA3AF;fontColor=#6B7280;fontSize=13;spacing=8;"
+          vertex="1" parent="1">
+          <mxGeometry x="80" y="940" width="1440" height="50" as="geometry"/>
+        </mxCell>
+
+        <!-- Edges -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#475569;" edge="1" parent="1" source="git" target="github"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#475569;" edge="1" parent="1" source="github" target="ci"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#475569;" edge="1" parent="1" source="controller" target="inventory"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" value="validated source" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#7C3AED;fontColor=#6D28D9;" edge="1" parent="1" source="ci" target="controller"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#D97706;" edge="1" parent="1" source="inventory" target="flags"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#16A34A;" edge="1" parent="1" source="flags" target="common"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#16A34A;" edge="1" parent="1" source="flags" target="security"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#16A34A;" edge="1" parent="1" source="flags" target="users"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#4B5563;" edge="1" parent="1" source="common" target="proxmox"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#4B5563;" edge="1" parent="1" source="security" target="physical"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;endFill=1;strokeWidth=2;strokeColor=#4B5563;" edge="1" parent="1" source="users" target="rpi"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e12" value="planned" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;endArrow=open;endFill=0;strokeColor=#9CA3AF;fontColor=#6B7280;" edge="1" parent="1" source="future" target="controller"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
